@@ -14,18 +14,10 @@ block content
                         .cus-name.col-sm-4
                             form(action='/checkout/delivery/' + address.AddressID, method='POST')
                                 p(style="font-weight: bold")
-                                    | Forma de Retirada
-                                .form-check.form-check-inline
-                                    input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='Retirar na Loja', required)
-                                    label.form-check-label(style="position: relative;top: -8px;", for='inlineRadio1') Retirar na Loja
-                                .form-check.form-check-inline-2
-                                    input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='Receber em Casa')
-                                    label.form-check-label(style="position: relative;top: -8px;",for='inlineRadio2') Receber em Casa
-                                p(style="font-weight: bold")
                                     | Forma de Pagamento
                                 .form-check.form-check-inline
-                                    input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions2', value='Dinheiro', required)
-                                    label.form-check-label(style="position: relative;top: -8px;", for='inlineRadio1') Dinheiro
+                                    input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions2', value='Boleto', required)
+                                    label.form-check-label(style="position: relative;top: -8px;", for='inlineRadio1') Boleto
                                 .form-check.form-check-inline-2
                                     input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions2', value='Cartão')
                                     label.form-check-label(style="position: relative;top: -8px;",for='inlineRadio2')

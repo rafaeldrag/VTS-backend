@@ -306,7 +306,7 @@ a#scrollUp i {
     padding-bottom: 20px;
     padding-top: 23px;
     margin-bottom: 20px;
-    background-color: #2c3293;
+    background-color: darkslategray;
 }
 
 .navbar-collapse.collapse {
@@ -1170,7 +1170,8 @@ button.signup-btn {
 
 }
 .logoimage {
-    width: 40%;
+    /* width: 40%; */
+    height: 100px;
     position: relative;
     top: -10px;
 }

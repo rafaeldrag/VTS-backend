@@ -1,0 +1,58 @@
+extends layout
+
+block content
+    section#form
+        //form
+        .container
+            .row
+                .col-sm-5
+                    // nav-bar
+                    .left-sidebar
+                //        #accordian.panel-group.category-products
+                //            .panel.panel-default.login-link
+                    //            .panel-heading
+                //                    h4.panel-title
+                    //                    a(href='/sign-in') Login
+                //            .panel.panel-default.signup-link
+                //                .panel-heading
+                //                    h4.panel-title
+                //                        b
+            //                                a(href='/sign-up') Cadastro
+            .row
+                    ///nav-bar
+                .col-sm-5.text-center
+                    //sign up form
+                    .signup-form
+                        h2 Novo Cadastro
+                        if checkOutNoti
+                            if (signUpError != '')
+                                p=signUpError
+                            else
+                                p=checkOutNoti
+                        else
+                            if (signUpError != '')
+                                p=signUpError
+                        p(id='sign-up-message', color ='red')
+
+
+                        form(id='sign-up', action='/sign-up', method='POST')
+                            input.form-control(type='text', name='username', placeholder='CPF ou CNPJ' required=true)
+                            input.form-control(type='text', name='fullName' placeholder='Nome completo ou Razão social' required=true)
+                            input.form-control(type='email', name='email', placeholder='Email' required=true)
+                            input.form-control#sign-up-zip(type='text', name='postcode', placeholder='CEP' required=true)
+                            div.street-address-div
+                                input.form-control#street(type='text', name='streetAddress', placeholder='Rua' required=true)
+                            div.street-number-div
+                                input.form-control#number(type='text', name='streetNumber', placeholder='Número' required=true)
+                            input.form-control(type='text', name='streetComplement', placeholder='Complemento')
+                            div.street-neighbourhood
+                                input.form-control#neighbourhood(type='text', name='streetNeighbourhood', placeholder='Bairro' required=true)
+                            div.street-city
+                                input.form-control#city(type='text', name='city', placeholder='Cidade' required=true)
+                            input.form-control#state(type='text', name='country', placeholder='Estado' required=true)
+                            input.form-control#sign-up-phone(type='tel', name='phone', placeholder='Número de telefone' required=true)
+                            input.form-control#input-password(type='password', name='password', placeholder='Senha', onkeyup='check();' required=true)
+                            input.form-control#input-confirm-password(type='password', name='rePassword', placeholder='Confirme sua senha', onkeyup='check();' required=true)
+                            button.btn.btn-default.signup-btn#sign-up-submit-btn(type='submit') Fazer Cadastro
+                    ///sign up form
+    ///form

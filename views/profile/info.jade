@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+    section
+        .container
+            .row
+                h2.title.text-center
+                    =title
+                //title here. no duplicate
+                //if navList
+                .col-sm-4
+                    // nav-bar
+                    .left-sidebar
+                        #accordian.panel-group.category-products
+                            .panel.panel-default.orders-left-top
+                                .panel-heading
+                                    h4.panel-title.orders-left-title
+                                        a.btn.orders-left(href='/usr/' + customer.Username) Informações pessoais
+                            // .panel.panel-default.orders-left-top
+                                .panel-heading
+                                    h4.panel-title.orders-left-title
+                                        a.btn.orders-left(href='/usr/' + customer.Username + '/orders') Pedidos
+                            .panel.panel-default.orders-left-top
+                                .panel-heading
+                                    h4.panel-title.orders-left-title
+                                        a.btn.orders-left(href='/usr/' + customer.Username + '/addresses') Endereços de entrega
+                    ///nav-bar
+                .col-sm-9
+                    .blog-post-area
+                        .single-blog-post
+                            block details

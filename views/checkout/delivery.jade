@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+    section#cart_items
+        .container
+            .step-one
+                h2.heading Selecione o Recebimento e Forma de Pagamento
+            .checkout-options
+                h3
+            .row
+
+                if addresses
+                    each address in addresses
+                        .cus-name.col-sm-4
+                            form(action='/checkout/delivery/' + address.AddressID, method='POST')
+                                p(style="font-weight: bold")
+                                    | Forma de Retirada
+                                .form-check.form-check-inline
+                                    input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='Retirar na Loja', required)
+                                    label.form-check-label(style="position: relative;top: -8px;", for='inlineRadio1') Retirar na Loja
+                                .form-check.form-check-inline-2
+                                    input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='Receber em Casa')
+                                    label.form-check-label(style="position: relative;top: -8px;",for='inlineRadio2') Receber em Casa
+                                p(style="font-weight: bold")
+                                    | Forma de Pagamento
+                                .form-check.form-check-inline
+                                    input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions2', value='Dinheiro', required)
+                                    label.form-check-label(style="position: relative;top: -8px;", for='inlineRadio1') Dinheiro
+                                .form-check.form-check-inline-2
+                                    input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions2', value='Cartão')
+                                    label.form-check-label(style="position: relative;top: -8px;",for='inlineRadio2')
+                                        p Cartão
+                                            h7.smallInfo  (Débito ou crédito à vista)
+                                    input.observation-input(type='text', placeholder ="Observação (Troco para..., etc)", name="Observation")
+                                    div.deliveryAddress
+                                        h4= address.FullName
+                                        p
+                                            span= address.StreetAddress
+                                            br
+                                            span= address.PostCode + ' ' + address.City
+                                            br
+                                            span= address.Country
+                                        p= 'Tel: ' + address.Phone
+
+                                    input.dev-btn.btn.btn-default.add-to-cart.input-delivery.close-deal(type='submit', value='Finalizar Pedido')
+
+
+
+        // .step-one#new-address
+            //    h2.heading Novo endereço de entrega
+
+        //    .checkout-options
+        //    .shopper-informations
+                .row
+                    .bill-to
+                        form(action='/checkout/delivery/new', method='POST')
+                            .col-sm-1.clearfix
+                            .col-sm-5.clearfix
+                                label(for='fullName') Nome Completo
+                                input(type='text', id='fullName', name='fullName')
+                                br
+                                label(for='streetAddress') Endereço
+                                input(type='text', name='streetAddress', id='streetAddress')
+                                br
+                                label(for='postcode') CEP
+                                input(type='text', name='postcode', id='postcode')
+                                br
+                                label(for='city') Cidade
+                                input(type='text', name='city', id='city')
+                                br
+                                label(for='country') Estado
+                                input(type='text', name='country', id='country')
+                                br
+                                label(for='phone') Número de telefone
+                                input(type='tel', name='phone', id='phone')
+                                br
+                                br
+                                input.dev-btn.btn.btn-default.add-to-cart.input-delivery(type='submit', value='Finalizar Pedido')

@@ -1,0 +1,50 @@
+extends admin
+
+block details
+    form(id='addProduct', action='/admin/products/add', method='POST')
+        label(for='name') Nome do Produo
+        br
+        input(type='text', id='name', name='name', placeholder='Product Name', required=true)
+        br
+
+        label(for='category') Categoria
+        br
+        select(id='category', name='category')
+            each category in categories
+                option(value=category.CategoryID)= category.CategoryName
+        br
+
+        label(for='price') Preço do produto
+        br
+        input(type='text', id='price', name='price', placeholder='125.88', required=true)
+        br
+
+        label(for='unit') Unidades em estoque
+        br
+        input(type='text', id='unit', name='unit', placeholder='12', required=true)
+        br
+
+        label(for='description') Descrição
+        br
+        textarea(id='description', name='description', required=true) Product Description
+        br
+
+        label(for='year') Unidade
+        br
+        input(type='text', id='year', name='year', placeholder='2020', required=true)
+        br
+
+        label(for='image') Imagem do Produto
+        input(type='file', id='image', name='image')
+        br
+
+        p
+            b Produto em destaque
+        label(for='featureYes') Sim
+        input(type='radio', id='featureYes', name='feature', value=1)
+
+        label(for='featureNo') Não
+        input(type='radio', id='featureNo', name='feature', value=0)
+        br
+
+        button.btn.btn-default(type='submit') Submeter

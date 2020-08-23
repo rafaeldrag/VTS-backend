@@ -1,0 +1,136 @@
+extends admin
+
+block details
+    .row
+        // .col-sm-6
+            .table-responsive.cart_info
+                table.table.table-condensed.total-result
+                    thead
+                        tr.cart_menu
+                            td(colspan=1) Customer Information
+                    tbody
+                        tr
+                            td Nome Completo
+                            td= orderCustomer.FullName
+                        tr
+                            td Endereço
+                            td= orderCustomer.StreetAddress
+                        tr
+                            td
+                            td= orderCustomer.PostCode + ' ' + orderCustomer.City
+                        tr
+                            td
+                            td= orderCustomer.Country
+                        tr
+                            td Tel
+                            td= orderCustomer.Phone
+
+        .col-sm-7
+            .table-responsive.cart_info
+                table.table.table-condensed.total-result
+                    thead
+                        tr.cart_menu
+                            td.bold(colspan=2) Dados do Cliente
+                    tbody
+                        tr
+                            td CPF ou CNPJ
+                            td= orderCustomer.Username
+                        tr
+                            td Email
+                            td= orderCustomer.Email
+
+                        tr
+                            td Nome Completo
+                            td= address.FullName
+                        tr
+                            td Endereço
+                            td= address.StreetAddress
+                        tr
+                            td
+                            td= address.PostCode + ', ' + address.City + ' - ' + address.Country
+                        tr
+                            td Tel
+                            td= address.Phone
+
+    .row
+        div.col-sm-7
+            .table-responsive.cart_info
+                table.table.table-condensed
+                    thead
+                        tr.cart_menu
+                            td.bold(colspan=4) Informações do pedido
+                        tr.cart_menu
+                            td.description Produto
+                            td.price Valor
+                            td.quantity Qtd
+                            td.total Total
+                    tbody
+                        each product in products
+                            -var quantity = product.Quantity;
+                            -var name = product.ProductName;
+                            -var productLink = '/cat/' + product.CategorySlug + '/' + product.ProductSlug;
+                            -var unitPrice = product.ProductPrice;
+                            -var productTotal = product.Total;
+                            tr
+                                td.cart_description
+                                    h4.reduced-line-height
+                                        a.product-title-admin(href=productLink)= name
+                                td.cart_price
+                                    p.margin-auto= 'R$ ' + unitPrice.toFixed(2)
+                                td.cart_quantity
+                                    p.margin-auto=quantity
+                                td.cart_total
+                                    p.margin-auto.cart_total_price= 'R$ ' + productTotal.toFixed(2)
+    .row
+        .col-sm-7
+            .table-responsive.cart_info
+                table.table.table-condensed.total-result
+                    tbody
+                        tr
+
+                                table.table.table-condensed.total-result
+                                    thead
+                                        tr.cart_menu
+                                            td.bold(colspan=2) Resumo do Pedido
+
+                                    tbody
+                                        tr
+                                            td Sub Total
+                                            td= 'R$ ' + order.SubTotal.toFixed(2)
+                                        tr
+                                            td Desconto
+                                            td= 'R$ ' + order.Discount.toFixed(2)
+                                        tr.shipping-cost
+                                            td Frete
+                                            if order.ShippingFee == 0
+                                                td Grátis
+                                            else
+                                                td= 'R$ ' + order.ShippingFee
+                                        tr
+                                            td Total
+                                            td
+                                                span= 'R$ ' + order.Total.toFixed(2)
+                                        tr
+                                            td Pagamento
+                                                td= order.PaymentType
+                                        tr
+                                            td Entrega
+                                                td= order.DeliveryType
+                                        tr
+                                            td Obs
+                                            td= order.Observation
+
+
+
+
+    .row
+        .col-sm-7
+            h3= 'Atualizar Status do Pedido #' + order.OrderID
+            form(id='updateStatus', action='/admin//orders/' + order.OrderID + '/update', method='POST')
+                select(id='status', name='status')
+                    option(value='Pedido Realizado', selected) Pedido Realizado
+                    option(value='Em separação') Em Separação
+                    option(value='Aguardando Pagamento') Aguardando Pagamento
+                    option(value='Entregue') Entregue
+                br
+                button.btn.btn-default(type='submit') Enviar

@@ -1,0 +1,104 @@
+extends info_orders
+
+block details
+    .review-payment
+    -function prettyDate(dateString){
+        -var data = new Date(dateString);
+        -var dia  = data.getDate(dateString).toString();
+        -var diaF = (dia.length == 1) ? '0' + dia : dia;
+        -var mes  = (data.getMonth()+1).toString();
+        -var mesF = (mes.length == 1) ? '0' + mes : mes;
+        -var anoF = data.getFullYear();
+        -var hora = data.getHours().toString();
+        -var horaF = (hora.length == 1) ? '0' + hora : hora;
+        -var minuto = data.getMinutes().toString();
+        -var minutoF = (minuto.length == 1) ? '0' + minuto : minuto;
+        -var segundos = data.getSeconds().toString();
+        -var segundosF = (segundos.length == 1) ? '0' + segundos : segundos;
+        -return diaF + "/" + mesF + "/" + anoF + " às " + horaF + ":" + minutoF + ":" + segundosF;
+    -}
+
+        h2= 'Pedido #' + order.OrderID
+        p= 'Hora do pedido: ' + prettyDate(order.OrderDate)
+    .row
+        .col-sm-8
+            .table-responsive.cart_info
+                table.table.table-condensed
+                    thead
+                        tr.cart_menu
+                            td.description Produto
+                            td.price Preço unitário
+                            td.quantity Quantidade
+                            td.total Total
+                    tbody
+
+                        each product in products
+                            -var quantity = product.Quantity;
+                            -var name = product.ProductName;
+                            -var productLink = '/cat/' + product.CategorySlug + '/' + product.ProductSlug;
+                            -var unitPrice = product.ProductPrice;
+                            -var productTotal = product.Total;
+                            tr
+                                // td.cart_product
+                                    a(href=productLink)
+                                        img(src='/img/products/' + product.Image, alt=name)
+                                td.cart_description
+                                    h4
+                                        a.cart_description_title(href=productLink)= name
+                                    p= product.Description
+                                td.cart_price
+                                    p= 'R$ ' + unitPrice
+                                td.cart_quantity
+                                    p=quantity
+                                td.cart_total
+                                    p.cart_total_price= 'R$ ' + productTotal
+
+        .col-sm-4
+            .table-responsive.cart_info
+                if address
+                    table.table.table-condensed.total-result
+                        thead
+                            tr.cart_menu
+                                td(colspan=2) Endereço de entrega
+
+                        tbody
+                            tr
+                                td Nome Completo
+                                td= address.FullName
+                            tr
+                                td Endereço
+                                td= address.StreetAddress
+                            tr
+                                td
+                                td= address.PostCode + ' ' + address.City
+                            tr
+                                td
+                                td= address.Country
+                            tr
+                                td Tel
+                                td= address.Phone
+
+            .table-responsive.cart_info
+
+                table.table.table-condensed.total-result
+                    thead
+                        tr.cart_menu
+                            td(colspan=2) Resumo
+
+                    tbody
+                        tr
+                            td Sub Total
+                            td= 'R$ ' + order.SubTotal
+                        tr
+                            td Desconto
+                            td= 'R$ ' + order.Discount
+                        tr.shipping-cost
+                            td Frete
+                            if order.ShippingFee == 0
+                                td Grátis
+                            else
+                                td= 'R$ ' + order.ShippingFee
+                        tr
+                            td Total
+                            td
+                                span= 'R$ ' + order.Total

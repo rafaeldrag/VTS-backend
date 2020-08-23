@@ -1,0 +1,43 @@
+extends info
+
+block details
+
+    .row
+        h3 INFORMAÇÃO PESSOAL
+        .col-sm-6
+            .table-responsive
+                table.table.table-condensed
+                    tbody
+                        tr
+                            td Nome Completo
+                            td= customer.FullName
+                        tr
+                            td Endereço
+                            td= customer.StreetAddress
+                        tr
+                            td
+                            td= customer.PostCode + ' ' + customer.City
+                        tr
+                            td
+                            td= customer.Country
+                        tr
+                            td Tel
+                            td= customer.Phone
+                        tr
+                            td Email
+                            td= customer.Email
+                        tr
+                            td CPF ou CNPJ
+                            td= customer.Username
+    form.dev-form(action='/usr/' + customer.Username + '/edit', method='GET')
+        button.btn.btn-default(type='submit')
+            i.fa.fa-edit
+            = ' Editar informação'
+
+    form.dev-form(action='/usr/' + customer.Username + '/change-password', method='GET')
+        button.btn.btn-default(type='submit')
+            i.fa.fa-key
+            = ' Mudar Senha'
+    br
+    br
+    br

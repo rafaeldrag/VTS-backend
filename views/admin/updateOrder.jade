@@ -1,0 +1,90 @@
+extends admin
+
+block details
+    .row
+        .col-sm-8
+            h5 Detalhe do Pedido
+                .table-responsive.cart_info
+                    table.table.table-condensed
+                        thead
+                            tr.cart_menu
+                                td.description Produto
+                                td.price Preço Unitário
+                                td.quantity Quantidade
+                                td.total Total
+                        tbody
+                            each product in products
+                                -var quantity = product.Quantity;
+                                -var name = product.ProductName;
+                                -var productLink = '/cat/' + product.CategorySlug + '/' + product.ProductSlug;
+                                -var unitPrice = product.ProductPrice;
+                                -var productTotal = product.Total;
+                                tr
+
+                                    td.cart_description
+                                        h4
+                                            a.product-title-admin(href=productLink)= name
+                                    td.cart_price
+                                        p= 'R$ ' + unitPrice
+                                    td.cart_quantity
+                                        p=quantity
+                                    td.cart_total
+                                        p.cart_total_price= 'R$ ' + productTotal
+        .col-sm-4
+            .table-responsive.cart_info
+                table.table.table-condensed.total-result
+                    thead
+                        tr.cart_menu
+                            td(colspan=2) Endereço de entrega
+                    tbody
+                        tr
+                            td Nome Completo
+                            td= address.FullName
+                        tr
+                            td Endereço
+                            td= address.StreetAddress
+                        tr
+                            td
+                            td= address.PostCode + ' ' + address.City
+                        tr
+                            td
+                            td= address.Country
+                        tr
+                            td Tel
+                            td= address.Phone
+
+    .row
+        .col-sm-6
+            h3= 'Atualizar Status do Pedido #' + order.OrderID
+            form(id='updateStatus', action='/admin//orders/' + order.OrderID + '/update', method='POST')
+                select(id='status', name='status')
+                    option(value='Pedido Realizado', selected) Pedido Realizado
+                    option(value='Em separação') Em Separação
+                    option(value='Aguardando Pagamento') Aguardando Pagamento
+                    option(value='Entregue') Entregue
+                br
+                button.btn.btn-default(type='submit') Enviar
+        .col-sm-6
+            .table-responsive.cart_info
+            table.table.table-condensed.total-result
+                thead
+                    tr.cart_menu
+                        td(colspan=2) Resumo do Pedido
+
+                tbody
+                    tr
+                        td Sub Total
+                        td= 'R$ ' + order.SubTotal
+                    tr
+                        td Desconto
+                        td=  'R$ ' + order.Discount
+                    tr.shipping-cost
+                        td Frete
+                        if order.ShippingFee == 0
+                            td Grátis
+                        else
+                            td= 'R$ ' + order.ShippingFee
+                    tr
+                        td Total
+                        td
+                            span= 'R$ ' + order.Total

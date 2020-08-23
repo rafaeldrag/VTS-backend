@@ -1,0 +1,34 @@
+extends info_orders
+
+block details
+
+    h3 Histórico de pedidos
+    .table-responsive
+        table.table.table-condensed
+            thead
+                tr
+                    td #
+                    td Data
+                    td Status
+                    td Total
+                    td
+            tbody
+                each order in orders.reverse()
+                    tr
+                    -function prettyDate(dateString){
+                        -var date = new Date(dateString);
+                        -var d = date.getDate(dateString);
+                        -var monthNames = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ];
+                        -var m = monthNames[date.getMonth()];
+                        -var y = date.getFullYear();
+                        -return d+' '+m+' '+y;
+                    -}
+                        td= order.OrderID
+                        td= prettyDate(order.OrderDate)
+                        td= order.Status
+                        td= 'R$ ' + order.Total
+                        td
+                            form(action='/usr/' + customer.Username + '/orders/' + order.OrderID, method='GET')
+                                button.btn.btn-default.order-btn(type='submit')
+                                    i.fa.fa-eye
+                                    = ' Visualizar'

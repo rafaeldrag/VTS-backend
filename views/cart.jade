@@ -1,0 +1,98 @@
+extends layout
+
+block content
+    section#cart_items
+        .container
+            .row
+                h2.title.text-center
+                    | Meu pedido
+                .table-responsive.cart_info
+                    table.table.table-condensed
+                        thead
+                            tr.cart_menu
+                                td.normal.description Produto
+                                td.normal.price Unid
+                                td.normal.quantity Qtd.normal
+                                td.normal.total Total
+                                td.normal.delete Remover
+                        tbody
+                            if (cart == null)
+                                tr
+                                    td.normal
+                                    td.normal(colspan='3')
+                                        h4 No Product in Cart Currently
+                            else
+                                each item in cart
+                                    -var quantity = item.quantity;
+                                    -var name = item.ProductName;
+                                    -var productLink = '/cat/' + item.CategorySlug + '/' + item.ProductSlug;
+                                    -var unitPrice = item.ProductPrice;
+                                    -var unit = item.ManufactureYear;
+                                    -var productTotal = item.productTotal;
+                                    -var id = item.ProductID;
+                                    tr
+                                        //td.normal.cart_product
+                                        //    a(href=productLink)
+                                        //        img(src='/img/products/' + item.Image, alt=name)
+                                        td.normal.cart_description
+                                            h4
+                                                a.product-link(href=productLink)= name
+                                            p= item.Description
+                                        td.normal.cart_price
+                                            p.cart-unity= unit
+                                        td.normal.cart_quantity
+                                            .cart_quantity_button
+                                                form#update-item(name=id)
+                                                    div.center
+                                                        .input-group
+                                                            span.input-group-btn.minus
+                                                                button.btn.btn-default.btn-number.btn-minus.btn-no-border(type='button', data-type='minus', data-field=id)
+                                                                    span.glyphicon.glyphicon-minus
+                                                            input.form-control.input-number.cart_quantity_input(type='text', name=id, value=quantity, min='1',autocomplete='off', size='2')
+                                                            span.input-group-btn.plus
+                                                                button.btn.btn-default.btn-number.btn-plus.btn-no-border#update-item-button(type='button', data-type='plus', data-field=id)
+                                                                    span.glyphicon.glyphicon-plus
+
+                                                     // input.cart_quantity_input(type='text', name=id, value=quantity, autocomplete='off', size='2')
+                                        td.normal.cart_total
+                                            p.cart_total_price= 'R$ ' + productTotal
+
+                                        td.normal.cart_delete
+                                            form(action='/cart/' + id + '/delete', method='POST')
+                                                button.cart_quantity_delete(type='submit')
+                                                    i.fa.fa-times
+
+                                tr
+                                    td.normal.button-add-more
+                                        button.btn.btn-default.add-to-cart.add-more-products
+                                            span
+                                                i.fa.fa-home
+                                                | Adicionar mais produtos
+                            if (summary != null)
+                                tr
+                                    td.normal.summary(colspan='5')
+                                        table.table.table-condensed.total-result
+                                            thead
+                                                tr.cart_menu
+                                                    td.normal(colspan=5) Resumo
+
+                                            tbody
+                                                tr
+                                                    td.normal Sub Total
+                                                    td.normal.sub-total= 'R$ ' + summary.subTotal
+                                                tr
+                                                    td.normal Desconto
+                                                    td.normal= 'R$ ' + summary.discount
+                                                tr.shipping-cost
+                                                    td.normal Frete
+                                                    if summary.shipCost == 0
+                                                        td.normal Grátis
+                                                    else
+                                                        td.normal= 'R$ ' + summary.shipCost
+                                                tr
+                                                    td.normal Total
+                                                    td.normal.total
+                                                        span= 'R$ ' + summary.total
+                                                tr
+                                                    td.normal(colspan=2).text-right
+                                                        button.btn.btn-default.finalize-order.check_out(onclick="window.location.href='/checkout'") Finalizar pedido <i class="fa fa-arrow-right"></i>

@@ -1,0 +1,88 @@
+extends ../layout
+
+block content
+    section#cart_items
+        .container
+            .review-payment
+                h2= title
+                h4.successPurchase= "Pedido realizado com sucesso."
+                b.paymentDeliveryMessage
+                    | O pagamento deverá ser feito na entrega.
+            .row
+                .col-sm-8
+                    .table-responsive.cart_info
+                        table.table.table-condensed
+                            thead
+                                tr.cart_menu
+                                    td.description Produto
+                                    td.price Preço Unitário
+                                    td.quantity Quantidade
+                                    td.total Total
+                            tbody
+                                each product in products
+                                    -var quantity = product.Quantity;
+                                    -var name = product.ProductName;
+                                    -var productLink = '/cat/' + product.CategorySlug + '/' + product.ProductSlug;
+                                    -var unitPrice = product.ProductPrice;
+                                    -var productTotal = product.Total;
+                                    tr
+                                        td.cart_description
+                                            h4
+                                                a(href=productLink)= name
+                                            p= product.Description
+                                        td.cart_price
+                                            p= 'R$ ' + unitPrice.toFixed(2)
+                                        td.cart_quantity
+                                            p=quantity
+                                        td.cart_total
+                                            p.cart_total_price= 'R$ ' + productTotal.toFixed(2)
+
+                .col-sm-4
+                    .table-responsive.cart_info
+                        table.table.table-condensed.dev-table
+                            thead
+                                tr.cart_menu
+                                    td(colspan=2) Endereço de entrega
+
+                            tbody
+                                tr
+                                    td Nome Completo
+                                    td= address.FullName
+                                tr
+                                    td Endereço
+                                    td= address.StreetAddress
+                                tr
+                                    td
+                                    td= address.PostCode + ' ' + address.City
+                                tr
+                                    td
+                                    td= address.Country
+                                tr
+                                    td Tel
+                                    td= address.Phone
+
+                    .table-responsive.cart_info
+                        table.table.table-condensed.dev-table
+                            thead
+                                tr.cart_menu
+                                    td(colspan=2) Resumo
+
+                            tbody
+                                tr
+                                    td Sub Total
+                                    td= 'R$ ' + order.SubTotal.toFixed(2)
+                                tr
+                                    td Desconto
+                                    td= 'R$ ' + order.Discount
+                                tr.shipping-cost
+                                    td Frete
+                                    if order.ShippingFee == 0
+                                        td Grátis
+                                    else
+                                        td= 'R$ ' + order.ShippingFee
+                                tr
+                                    td Total
+                                    td
+                                        span= 'R$ ' + order.Total.toFixed(2)
+
+    // /#cart_items

@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    section#form
+        //form
+        .container
+            .row
+                .col-sm-4
+                    // nav-bar
+                    .left-sidebar
+            //            #accordian.panel-group.category-products
+            //                .panel.panel-default.login-link
+            //                    .panel-heading
+            //                        h4.panel-title
+            //                            b
+            //                                a(href='/sign-in') Login
+            //                .panel.panel-default.signup-link
+            //                    .panel-heading
+            //                        h4.panel-title
+            //                            a(href='/sign-up') Cadastro
+            .row
+                .col-sm-4.text-center
+                    //login form
+                    .login-form
+                        h2 Entre na sua conta ou faça seu cadastro &#128521;
+                        if checkOutNoti
+                            if (signInError != '')
+                                p=signInError
+                            else
+                                p=checkOutNoti
+                        else
+                            if (signInError != '')
+                                p=signInError
+
+                        form(id='sign-in', action='/sign-in', method='POST')
+                            input(type='text', name='username', placeholder='CPF ou CNPJ')
+                            input(type='password', name='password', placeholder='Senha')
+                            //
+                              <span>
+                              <input type="checkbox" class="checkbox">
+                              Keep me signed in
+                              </span>
+                            button.btn.btn-default.login-btn(type='submit') Entrar
+                            span.login-separator ou
+                            button.signup-btn.sign-up-login
+                                a(href='/sign-up') Fazer Cadastro
+                    ///login form
+    ///form
